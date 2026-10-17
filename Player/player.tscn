@@ -2,11 +2,176 @@
 
 [ext_resource type="Script" uid="uid://c8xqs3urnbcmx" path="res://Player/player.gd" id="1_l8h54"]
 [ext_resource type="Script" uid="uid://cmbcvwh0p2jjq" path="res://StateMachine/StateMachine.gd" id="2_4ntmi"]
+[ext_resource type="PackedScene" uid="uid://bs4wbfvehgm5h" path="res://Player/animated_player.tscn" id="2_fhl08"]
 [ext_resource type="Script" uid="uid://b5csf0k51tkb5" path="res://StateMachine/PlayerStates/PlayerRun.gd" id="3_btcbx"]
+[ext_resource type="AudioStream" uid="uid://rcvmjum405nj" path="res://Assets/Audio/footstep-01.ogg" id="3_od3ui"]
+[ext_resource type="Script" uid="uid://b4n6836xbpvfp" path="res://Player/mannequin_animation_tree.gd" id="3_vtle1"]
+[ext_resource type="AudioStream" uid="uid://cp3o6l25k5dsm" path="res://Assets/Audio/footstep-02.ogg" id="4_apopc"]
 [ext_resource type="Script" uid="uid://c2fahn2m2se57" path="res://StateMachine/PlayerStates/PlayerFall.gd" id="4_gwnis"]
+[ext_resource type="AudioStream" uid="uid://clfh77vbuo10y" path="res://Assets/Audio/footstep-03.ogg" id="5_5htga"]
 [ext_resource type="Script" uid="uid://ynxg2aktk8hr" path="res://StateMachine/PlayerStates/PlayerDash.gd" id="5_k53q1"]
+[ext_resource type="AudioStream" uid="uid://cw7xybxcl0jds" path="res://Assets/Audio/footstep-04.ogg" id="6_p5o4e"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_hvfyp"]
+[sub_resource type="Gradient" id="Gradient_vtle1"]
+offsets = PackedFloat32Array(0, 0.12709497, 0.7388268)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_egawm"]
+gradient = SubResource("Gradient_vtle1")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_od3ui"]
+gradient = SubResource("Gradient_vtle1")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j2okh"]
+albedo_texture = SubResource("GradientTexture2D_egawm")
+emission_enabled = true
+emission_energy_multiplier = 4.18
+emission_texture = SubResource("GradientTexture2D_od3ui")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_uk0tf"]
+top_radius = 0.1
+bottom_radius = 0.1
+cap_top = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j2okh"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uk0tf"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_j3pel"]
+streams_count = 4
+stream_0/stream = ExtResource("3_od3ui")
+stream_1/stream = ExtResource("4_apopc")
+stream_2/stream = ExtResource("5_5htga")
+stream_3/stream = ExtResource("6_p5o4e")
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fhl08"]
+animation = &"PlayerAnimations/Dodge_Forward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x3vf3"]
+animation = &"PlayerAnimations/Hit_A"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vtle1"]
+animation = &"PlayerAnimations/Spawn_Ground"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_apopc"]
+animation = &"PlayerAnimations/Melee_1H_Attack_Slice_Horizontal"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_5htga"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_p5o4e"]
+nodes/output/position = Vector2(928, 160)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_apopc")
+nodes/Animation/position = Vector2(176, 112)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_5htga")
+nodes/TimeScale/position = Vector2(688, 112)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gu6f8"]
+animation = &"PlayerAnimations/Melee_2H_Attack_Spin"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_dkpta"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_lfmf2"]
+nodes/output/position = Vector2(880, 160)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_gu6f8")
+nodes/Animation/position = Vector2(160, 128)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_dkpta")
+nodes/TimeScale/position = Vector2(608, 176)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pisgm"]
+animation = &"PlayerAnimations/Melee_1H_Attack_Stab"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_b1ygp"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_o28un"]
+nodes/output/position = Vector2(880, 80)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_pisgm")
+nodes/Animation/position = Vector2(128, 112)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_b1ygp")
+nodes/TimeScale/position = Vector2(608, 112)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_od3ui"]
+animation = &"PlayerAnimations/Idle_A"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_00tjw"]
+animation = &"PlayerAnimations/Running_B"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_x3vf3"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_od3ui")
+blend_point_0/pos = -1.0
+blend_point_0/name = &"PlayerAnimations_Idle_A"
+blend_point_1/node = SubResource("AnimationNodeAnimation_00tjw")
+blend_point_1/pos = 1.0
+blend_point_1/name = &"PlayerAnimations_Running_B"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_apopc"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5htga"]
+xfade_time = 0.1
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p5o4e"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gu6f8"]
+xfade_time = 0.05
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dkpta"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lfmf2"]
+xfade_time = 0.2
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_n471f"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7emwf"]
+xfade_time = 0.2
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hshwv"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gpjlu"]
+xfade_time = 0.2
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8mwp6"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qemgg"]
+xfade_time = 0.5
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_uk0tf"]
+states/DodgeForward/node = SubResource("AnimationNodeAnimation_fhl08")
+states/DodgeForward/position = Vector2(517.4512, -187.68)
+states/End/position = Vector2(1198.4, -24.480003)
+states/PlayerAnimations_Hit_A/node = SubResource("AnimationNodeAnimation_x3vf3")
+states/PlayerAnimations_Hit_A/position = Vector2(508.61377, 151.79999)
+states/PlayerAnimations_Spawn_Ground/node = SubResource("AnimationNodeAnimation_vtle1")
+states/PlayerAnimations_Spawn_Ground/position = Vector2(279.2, -25.400002)
+states/SlashAttack/node = SubResource("AnimationNodeBlendTree_p5o4e")
+states/SlashAttack/position = Vector2(810.8, -160.4)
+states/SpinAttack/node = SubResource("AnimationNodeBlendTree_lfmf2")
+states/SpinAttack/position = Vector2(878.8, -24.457602)
+states/StabAttack/node = SubResource("AnimationNodeBlendTree_o28un")
+states/StabAttack/position = Vector2(840.36804, 132.4)
+states/WalkSpace/node = SubResource("AnimationNodeBlendSpace1D_x3vf3")
+states/WalkSpace/position = Vector2(595.9321, -24.484802)
+transitions = ["Start", "PlayerAnimations_Spawn_Ground", SubResource("AnimationNodeStateMachineTransition_apopc"), "PlayerAnimations_Spawn_Ground", "WalkSpace", SubResource("AnimationNodeStateMachineTransition_5htga"), "WalkSpace", "DodgeForward", SubResource("AnimationNodeStateMachineTransition_p5o4e"), "DodgeForward", "WalkSpace", SubResource("AnimationNodeStateMachineTransition_gu6f8"), "WalkSpace", "PlayerAnimations_Hit_A", SubResource("AnimationNodeStateMachineTransition_dkpta"), "PlayerAnimations_Hit_A", "WalkSpace", SubResource("AnimationNodeStateMachineTransition_lfmf2"), "WalkSpace", "SlashAttack", SubResource("AnimationNodeStateMachineTransition_n471f"), "SlashAttack", "WalkSpace", SubResource("AnimationNodeStateMachineTransition_7emwf"), "WalkSpace", "StabAttack", SubResource("AnimationNodeStateMachineTransition_hshwv"), "StabAttack", "WalkSpace", SubResource("AnimationNodeStateMachineTransition_gpjlu"), "WalkSpace", "SpinAttack", SubResource("AnimationNodeStateMachineTransition_8mwp6"), "SpinAttack", "WalkSpace", SubResource("AnimationNodeStateMachineTransition_qemgg")]
+graph_offset = Vector2(88, -218)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l8h54"]
 
@@ -18,8 +183,104 @@ unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1950298725]
-mesh = SubResource("CapsuleMesh_hvfyp")
+[node name="GamedevTV_Mannequin_Medium" parent="." unique_id=2067433722 instance=ExtResource("2_fhl08")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="Skeleton3D" parent="GamedevTV_Mannequin_Medium/Rig_Medium" parent_id_path=PackedInt32Array(2067433722, 1199149056) index="0" unique_id=161966776]
+bones/1/position = Vector3(-8.4269356e-19, 0.41236144, -2.0091375e-25)
+bones/1/rotation = Quaternion(0.05125878, 0.02155546, -0.0011066181, 0.99845225)
+bones/2/rotation = Quaternion(0.017692178, 0.043876313, 0.009397859, 0.99883616)
+bones/3/rotation = Quaternion(0.0025048375, 4.918133e-09, 0.00021681337, 0.9999969)
+bones/3/scale = Vector3(1, 0.9999999, 1)
+bones/4/position = Vector3(0.21200737, 0.13118432, -0.015165355)
+bones/4/rotation = Quaternion(-0.58788556, -0.048408404, -0.717278, 0.37089002)
+bones/4/scale = Vector3(0.9999993, 0.99999917, 0.99999976)
+bones/5/rotation = Quaternion(5.209021e-09, -7.6942314e-08, -0.30690995, 0.95173866)
+bones/5/scale = Vector3(1.0000002, 0.9999999, 1)
+bones/6/rotation = Quaternion(7.598428e-09, -3.8330903e-09, 0.0266581, 0.99964464)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(-0.20865308, -0.22487985, -0.092650704, 0.94726384)
+bones/7/scale = Vector3(0.9999999, 1, 1.0000001)
+bones/8/position = Vector3(5.138707e-10, 0.096125096, -0.057500064)
+bones/8/rotation = Quaternion(-0.01729551, -0.027563186, -0.75015026, 0.66046625)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/position = Vector3(-0.21200737, 0.1370801, 0.015165536)
+bones/9/rotation = Quaternion(-0.6764755, 0.06684234, 0.6319657, 0.37219927)
+bones/9/scale = Vector3(0.9999993, 0.99999905, 0.99999976)
+bones/10/rotation = Quaternion(-5.762363e-09, 4.5494776e-08, 0.529035, 0.8486001)
+bones/10/scale = Vector3(1.0000002, 0.9999998, 1)
+bones/11/rotation = Quaternion(1.3807978e-10, 3.5662107e-09, -0.026658095, 0.99964464)
+bones/12/rotation = Quaternion(-0.12868485, 0.3445513, 0.012952148, 0.9298155)
+bones/12/scale = Vector3(0.99999976, 0.99999994, 1.0000002)
+bones/13/position = Vector3(-7.964459e-09, 0.096125126, -0.057500064)
+bones/13/rotation = Quaternion(-0.02010426, -0.0076169935, 0.5712611, 0.8204868)
+bones/13/scale = Vector3(1, 1, 1)
+bones/14/rotation = Quaternion(-0.044559434, -0.056212045, 0.0017763237, 0.9974225)
+bones/15/position = Vector3(0.1709451, 0.113587216, 0.04729173)
+bones/15/rotation = Quaternion(0.92741907, 0.016102806, 0.042810842, 0.3712168)
+bones/15/scale = Vector3(0.99999994, 0.99999976, 1.000001)
+bones/16/rotation = Quaternion(0.4643324, 6.16973e-08, -3.180486e-07, 0.88566107)
+bones/16/scale = Vector3(1.0000002, 1.0000002, 1.0000001)
+bones/17/rotation = Quaternion(-0.5793053, -0.05917865, 0.0150550585, 0.8128202)
+bones/17/scale = Vector3(1.0000002, 1.0000007, 0.99999905)
+bones/18/rotation = Quaternion(7.692963e-06, 0.92024374, -0.39134583, -1.6760046e-06)
+bones/18/scale = Vector3(1, 0.999997, 1.0000032)
+bones/19/position = Vector3(-0.17094508, 0.10766967, -0.046773445)
+bones/19/rotation = Quaternion(0.99751276, -0.012994025, 0.017234622, -0.067100614)
+bones/19/scale = Vector3(0.99999994, 0.99999976, 1.000001)
+bones/20/rotation = Quaternion(0.24499796, -6.557337e-08, 1.7130893e-07, 0.96952367)
+bones/20/scale = Vector3(1, 1.0000001, 1)
+bones/21/rotation = Quaternion(-0.42442554, 0.056785103, -0.009809956, 0.9036273)
+bones/21/scale = Vector3(0.9999999, 1.0000007, 0.999999)
+bones/22/rotation = Quaternion(-4.4668785e-05, 0.9203596, -0.39107314, 1.01711e-05)
+bones/22/scale = Vector3(1.0000001, 0.99999726, 1.0000031)
+
+[node name="WeaponSlot" parent="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D" index="6" unique_id=643558321 node_paths=PackedStringArray("shapecast")]
+transform = Transform3D(0.15896717, -0.1030058, -0.9818954, -0.55544984, -0.8315446, -0.0026923418, -0.81621283, 0.54582155, -0.18940301, -0.46999007, 0.68957686, 0.21537027)
+shapecast = NodePath("ShapeCast3D")
+
+[node name="LaserSword" type="MeshInstance3D" parent="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/WeaponSlot" index="0" unique_id=6904095]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -1.25, 0, 0)
+material_override = SubResource("StandardMaterial3D_j2okh")
+mesh = SubResource("CylinderMesh_uk0tf")
+
+[node name="Handle" type="MeshInstance3D" parent="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/WeaponSlot" index="1" unique_id=946222999]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_j2okh")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/WeaponSlot" index="2" unique_id=1488029921]
+shape = SubResource("BoxShape3D_uk0tf")
+target_position = Vector3(-2, 0, 0)
+max_results = 8
+collision_mask = 2
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="LeftFootBone" parent="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D" index="7" unique_id=472779417]
+transform = Transform3D(0.9972746, 0.05232374, -0.052023534, -0.010582669, -0.5963506, -0.8026544, -0.0730223, 0.80101776, -0.5941714, 0.18800834, 0.19879861, 0.14497122)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/LeftFootBone" index="0" unique_id=709110071]
+stream = SubResource("AudioStreamRandomizer_j3pel")
+volume_db = -3.0
+max_db = -3.0
+bus = &"SFX"
+
+[node name="RightFootBone" parent="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D" index="8" unique_id=762222917]
+transform = Transform3D(0.9938889, -0.059577465, 0.09292457, -0.04513938, -0.98759633, -0.15038902, 0.10073194, 0.14527631, -0.98424983, -0.18482816, 0.19245207, -0.18095043)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/RightFootBone" index="0" unique_id=1657190257]
+stream = SubResource("AudioStreamRandomizer_j3pel")
+volume_db = -3.0
+max_db = -3.0
+bus = &"SFX"
+
+[node name="MannequinAnimationTree" type="AnimationTree" parent="GamedevTV_Mannequin_Medium" unique_id=1908365948]
+tree_root = SubResource("AnimationNodeStateMachine_uk0tf")
+anim_player = NodePath("../AnimationPlayer")
+parameters/SlashAttack/TimeScale/scale = 1.5
+parameters/SpinAttack/TimeScale/scale = 1.5
+parameters/StabAttack/TimeScale/scale = 1.5
+parameters/WalkSpace/blend_position = 0.0
+script = ExtResource("3_vtle1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=742478028]
 shape = SubResource("CapsuleShape3D_l8h54")
@@ -54,3 +315,8 @@ player = NodePath("../..")
 [node name="DashDuration" type="Timer" parent="StateMachine/PlayerDash" unique_id=1788606244]
 wait_time = 0.1
 one_shot = true
+
+[connection signal="footstep" from="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/LeftFootBone" to="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/LeftFootBone/AudioStreamPlayer3D" method="play"]
+[connection signal="footstep" from="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/RightFootBone" to="GamedevTV_Mannequin_Medium/Rig_Medium/Skeleton3D/RightFootBone/AudioStreamPlayer3D" method="play"]
+
+[editable path="GamedevTV_Mannequin_Medium"]

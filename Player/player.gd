@@ -2,9 +2,12 @@ extends CharacterBody3D
 class_name Player
 
 @onready var dash_cooldown: Timer = $DashCooldown
+@onready var mannequin_animation_tree: AnimationTree = $GamedevTV_Mannequin_Medium/MannequinAnimationTree
+@onready var player_root: Node3D = $GamedevTV_Mannequin_Medium
 
 @export var dash_speed := 50.0
 @export var run_speed := 8.0
+@export var decay:= 12.0
 
 func get_movement_direction() -> Vector3:
 	var input = Vector3.ZERO
@@ -22,3 +25,11 @@ func can_dash() -> bool:
 	if get_movement_direction().is_zero_approx():
 		return false
 	return dash_cooldown.is_stopped()
+
+func look_toward_direction(direction: Vector3, delta: float) -> void:
+	if direction.is_zero_approx():
+		return
+	var target = player_root.global_transform
+	target = target.looking_at(player_root.global_position + direction,  Vector3.UP, true)
+	player_root.global_transform = player_root.global_transform.interpolate_with(target, 
+	1.0 - exp(-decay + delta))

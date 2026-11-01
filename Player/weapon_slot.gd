@@ -11,7 +11,7 @@ enum mode {NONE, SLASH, STAB}
 @export var vfx_threshold: float = 0.0
 @export var enabled: bool = false:
 	set(value):
-		if not enabled and value:
+		if enabled == false and value == true:
 			slash.emit()
 		enabled = value
 		if shapecast:

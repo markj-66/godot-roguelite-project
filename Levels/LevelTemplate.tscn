@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dyj3auoai18wd"]
 
 [ext_resource type="PackedScene" uid="uid://dveet4y3bg7gi" path="res://Player/player.tscn" id="2_ersrp"]
+[ext_resource type="Script" uid="uid://bdisjfqdmyaha" path="res://Components/HealthComponent.gd" id="4_ersrp"]
 [ext_resource type="MeshLibrary" uid="uid://cbw5qq7imfwn5" path="res://Levels/Gridmap/floormap.tres" id="7_vjhoh"]
 [ext_resource type="MeshLibrary" uid="uid://10ib4mm1ty30" path="res://Levels/Gridmap/wall_map.tres" id="8_g8k58"]
 
@@ -28,6 +29,10 @@ vertices = PackedVector3Array(-7.5, 0.5, -7.5, -7.5, 0.5, 7, 7.5, 0.5, 7, 7.5, 0
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 sample_partition_type = 2
 geometry_parsed_geometry_type = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uk0tf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uk0tf"]
 
 [node name="Level" type="Node3D" unique_id=1079320019]
 
@@ -64,3 +69,18 @@ data = {
 
 [node name="Player" parent="." unique_id=602303743 instance=ExtResource("2_ersrp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=2073905181]
+collision_layer = 3
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1563084653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0566499, 3.9763608)
+mesh = SubResource("CapsuleMesh_uk0tf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1244401784]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4)
+shape = SubResource("CapsuleShape3D_uk0tf")
+debug_color = Color(0.8039216, 0.09803922, 0.8235294, 0.6745098)
+
+[node name="HealthComponent" type="Node" parent="StaticBody3D" unique_id=1427365234]
+script = ExtResource("4_ersrp")

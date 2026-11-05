@@ -11,6 +11,7 @@ class_name Player
 
 func get_movement_direction() -> Vector3:
 	var input = Vector3.ZERO
+	
 	var input_vector = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	input = Vector3(input_vector.x, 0, input_vector.y)
 	
@@ -33,3 +34,15 @@ func look_toward_direction(direction: Vector3, delta: float) -> void:
 	target = target.looking_at(player_root.global_position + direction,  Vector3.UP, true)
 	player_root.global_transform = player_root.global_transform.interpolate_with(target, 
 	1.0 - exp(-decay + delta))
+
+func get_player_position_2d() -> Vector2:
+	return get_viewport().get_camera_3d().unproject_position(global_position)
+	
+func get_mouse_direction() -> Vector2:
+	return get_viewport().get_mouse_position() - get_player_position_2d()
+	
+func get_aim_direction() -> Vector3:
+	var direction = get_mouse_direction()
+	var direction_3d = Vector3(direction.x, 0.0, direction.y)
+	var camera_rotation = get_viewport().get_camera_3d().global_rotation.y
+	return direction_3d.rotated(Vector3.UP, camera_rotation)

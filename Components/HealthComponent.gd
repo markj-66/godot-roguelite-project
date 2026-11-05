@@ -14,6 +14,7 @@ func _ready() -> void:
 	
 func take_damage(damage_in: float) -> void:
 	current_health -= damage_in
+	print(current_health)
 	health_changed.emit(current_health)
 	if hit_audio:
 		hit_audio.play()

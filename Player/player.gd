@@ -4,10 +4,14 @@ class_name Player
 @onready var dash_cooldown: Timer = $DashCooldown
 @onready var mannequin_animation_tree: AnimationTree = $GamedevTV_Mannequin_Medium/MannequinAnimationTree
 @onready var player_root: Node3D = $GamedevTV_Mannequin_Medium
+@onready var health_component: HealthComponent = $HealthComponent
 
 @export var dash_speed := 50.0
 @export var run_speed := 8.0
 @export var decay:= 12.0
+
+func _ready() -> void:
+	health_component.defeat.connect(get_tree().reload_current_scene)
 
 func get_movement_direction() -> Vector3:
 	var input = Vector3.ZERO

@@ -5,9 +5,11 @@ extends Node3D
 
 @onready var front_progress_bar: ProgressBar = $SubViewport/FrontProgressBar
 @onready var health_progress_bar: ProgressBar = $SubViewport/HealthProgressBar
+@onready var sprite_3d: Sprite3D = $Sprite3D
 
 func _ready() -> void:
 	health_component.health_changed.connect(update_health_value)
+	health_component.defeat.connect(defeat)
 	front_progress_bar.value = 100.0
 	front_progress_bar.get_theme_stylebox("fill").bg_color = health_color
 	
@@ -17,3 +19,7 @@ func update_health_value(value_in: float) -> void:
 	tween.tween_property(health_progress_bar, "value", target_health_percentage, 0.2).from(front_progress_bar.value)
 	front_progress_bar.value = target_health_percentage
 	
+func defeat() -> void:
+	var tween = create_tween()
+	tween.tween_property(sprite_3d, "transparency", 1.0, 0.2).from(0.0)
+	tween.tween_callback(queue_free)

@@ -4,7 +4,11 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uk0tf"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wixop"]
+bg_color = Color(0.8666667, 0.8666667, 0.8666667, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egawm"]
+resource_local_to_scene = true
 bg_color = Color(0.8901961, 0.2901961, 0.25882354, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_uk0tf"]
@@ -12,9 +16,19 @@ viewport_path = NodePath("SubViewport")
 
 [node name="HealthBar" type="Node3D" unique_id=609341116]
 script = ExtResource("1_wixop")
+health_color = Color(0, 0.74876684, 0, 1)
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=494407015]
 size = Vector2i(128, 16)
+
+[node name="HealthProgressBar" type="ProgressBar" parent="SubViewport" unique_id=1143619323]
+custom_minimum_size = Vector2(128, 16)
+offset_right = 128.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_uk0tf")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wixop")
+value = 75.0
+show_percentage = false
 
 [node name="FrontProgressBar" type="ProgressBar" parent="SubViewport" unique_id=603139822]
 custom_minimum_size = Vector2(128, 16)
@@ -22,6 +36,7 @@ offset_right = 4.0
 offset_bottom = 27.0
 theme_override_styles/background = SubResource("StyleBoxEmpty_uk0tf")
 theme_override_styles/fill = SubResource("StyleBoxFlat_egawm")
+value = 50.0
 show_percentage = false
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1845974166]

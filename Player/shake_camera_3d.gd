@@ -14,6 +14,3 @@ func quick_shake(magnitude: float) -> void:
 	var tween = create_tween()
 	tween.tween_property(self, "trauma", 0.0, shake_duration).from(magnitude)
 	
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
-		quick_shake(1.0)

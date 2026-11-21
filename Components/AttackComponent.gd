@@ -3,6 +3,8 @@ class_name AttackComponent
 
 var temporary_exceptions := []
 
+@export var shake_on_damage: bool = false
+
 @onready var attack_shapecast : ShapeCast3D = get_parent()
 
 func deal_damage(damage: float, knockback: Vector3) -> void:
@@ -17,7 +19,9 @@ func deal_damage(damage: float, knockback: Vector3) -> void:
 				health_component.take_damage(damage)
 				attack_shapecast.add_exception(collider)
 				temporary_exceptions.append(collider)
-				
+		if shake_on_damage:
+			get_viewport().get_camera_3d().quick_shake(0.7)
+					
 func reset_exceptions() -> void:
 	for exception in temporary_exceptions:
 		attack_shapecast.remove_exception(exception)

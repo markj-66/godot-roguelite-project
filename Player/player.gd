@@ -5,6 +5,7 @@ class_name Player
 @onready var mannequin_animation_tree: AnimationTree = $GamedevTV_Mannequin_Medium/MannequinAnimationTree
 @onready var player_root: Node3D = $GamedevTV_Mannequin_Medium
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var damage_tint: ColorRect = $DamageTint
 
 @export var dash_speed := 50.0
 @export var run_speed := 8.0
@@ -12,6 +13,7 @@ class_name Player
 
 func _ready() -> void:
 	health_component.defeat.connect(get_tree().reload_current_scene)
+	health_component.health_changed.connect(health_component_changed)
 
 func get_movement_direction() -> Vector3:
 	var input = Vector3.ZERO
@@ -50,3 +52,12 @@ func get_aim_direction() -> Vector3:
 	var direction_3d = Vector3(direction.x, 0.0, direction.y)
 	var camera_rotation = get_viewport().get_camera_3d().global_rotation.y
 	return direction_3d.rotated(Vector3.UP, camera_rotation)
+
+func health_component_changed(health_in: float) -> void:
+	get_viewport().get_camera_3d().quick_shake(1.0)
+	var tween = create_tween()
+	tween.tween_property(damage_tint, "color", Color(Color.RED, 0.0), 0.2).from(Color(Color.RED, 0.5))
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		health_component.take_damage(5.0)

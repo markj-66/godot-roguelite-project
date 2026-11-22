@@ -7,6 +7,7 @@ var direction: Vector3
 @onready var dash_duration: Timer = $DashDuration
 
 func enter(_previous_state_path: String, _data := {}) -> void:
+	player.dash_audio.play()
 	direction = _data.direction
 	player.velocity = direction * player.dash_speed
 	player.dash_cooldown.start()

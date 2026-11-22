@@ -10,6 +10,7 @@ class_name Player
 @export var dash_speed := 50.0
 @export var run_speed := 8.0
 @export var decay:= 12.0
+@export var dash_audio: AudioStreamPlayer3D
 
 func _ready() -> void:
 	health_component.defeat.connect(get_tree().reload_current_scene)
@@ -58,6 +59,6 @@ func health_component_changed(health_in: float) -> void:
 	var tween = create_tween()
 	tween.tween_property(damage_tint, "color", Color(Color.RED, 0.0), 0.2).from(Color(Color.RED, 0.5))
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
-		health_component.take_damage(5.0)
+#func _input(event: InputEvent) -> void:
+	#if event.is_action_pressed("ui_accept"):
+		#health_component.take_damage(5.0)

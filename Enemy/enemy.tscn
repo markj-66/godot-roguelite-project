@@ -5,18 +5,86 @@
 [ext_resource type="PackedScene" uid="uid://bwo2c4dl16ces" path="res://Components/health_bar.tscn" id="2_am0pq"]
 [ext_resource type="PackedScene" uid="uid://b7usbbh1tfnjv" path="res://Enemy/animated_enemy.tscn" id="2_ncf7h"]
 [ext_resource type="AudioStream" uid="uid://bhd6x8sglgt14" path="res://Assets/Audio/hit.ogg" id="3_am0pq"]
+[ext_resource type="Script" uid="uid://cmbcvwh0p2jjq" path="res://StateMachine/StateMachine.gd" id="6_m6jha"]
+[ext_resource type="Script" uid="uid://comik6daaqu27" path="res://StateMachine/EnemyStates/EnemyWait.gd" id="7_glvfu"]
+[ext_resource type="Script" uid="uid://00l3ypjwm8lg" path="res://StateMachine/EnemyStates/EnemyStun.gd" id="8_0rspp"]
+[ext_resource type="Script" uid="uid://bdolb8vqtagd4" path="res://StateMachine/EnemyStates/EnemyDefeat.gd" id="9_efk13"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uk0tf"]
 
-[node name="Enemy" type="CharacterBody3D" unique_id=2015172738]
+[node name="Enemy" type="CharacterBody3D" unique_id=2015172738 node_paths=PackedStringArray("stun_state", "defeat_state")]
 collision_layer = 3
 script = ExtResource("1_eqilm")
+stun_state = NodePath("StateMachine/EnemyStun")
+defeat_state = NodePath("StateMachine/EnemyDefeat")
 
 [node name="AnimationAnchor" type="Node3D" parent="." unique_id=161838555]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="AnimatedEnemy" parent="AnimationAnchor" unique_id=2009153407 instance=ExtResource("2_ncf7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="Skeleton3D" parent="AnimationAnchor/AnimatedEnemy/Enemy_Medium/Rig_Medium" parent_id_path=PackedInt32Array(2009153407, 725202374, 2113355319) index="0" unique_id=955855821]
+bones/1/position = Vector3(0, 0.40566343, 0)
+bones/1/rotation = Quaternion(0, -1.19209275e-07, 0, 1)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/rotation = Quaternion(0, 7.1054274e-15, 0, 1)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/rotation = Quaternion(0, -8.4703295e-22, 0, 1)
+bones/3/scale = Vector3(1, 0.99999994, 1)
+bones/4/position = Vector3(0.21200737, 0.13413215, 8.402462e-08)
+bones/4/rotation = Quaternion(-0.5141215, -0.48546782, -0.48546782, 0.51412183)
+bones/4/scale = Vector3(0.99999934, 0.99999934, 0.99999976)
+bones/5/rotation = Quaternion(1.4942598e-09, -6.228116e-08, -0.055285532, 0.99847054)
+bones/5/scale = Vector3(1.0000002, 0.9999999, 0.99999994)
+bones/6/rotation = Quaternion(5.118456e-11, -3.0774258e-10, 0.0266581, 0.99964464)
+bones/6/scale = Vector3(0.99999994, 0.99999994, 0.99999994)
+bones/7/rotation = Quaternion(1.2001639e-09, 1.3589292e-07, -5.4551956e-06, 1)
+bones/7/scale = Vector3(1, 0.99999994, 0.99999994)
+bones/8/position = Vector3(5.1389204e-10, 0.09612507, -0.057500124)
+bones/8/rotation = Quaternion(1.6806123e-09, 1.6806123e-09, -0.7071068, 0.7071067)
+bones/8/scale = Vector3(0.99999994, 1, 0.99999994)
+bones/9/rotation = Quaternion(0, 4.2351647e-22, 0, 1)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/position = Vector3(-0.21200737, 0.13413215, 8.402462e-08)
+bones/10/rotation = Quaternion(-0.5141214, 0.48546776, 0.4854678, 0.5141219)
+bones/10/scale = Vector3(0.9999993, 0.9999993, 0.99999976)
+bones/11/rotation = Quaternion(1.4942598e-09, 6.228116e-08, 0.055285532, 0.99847054)
+bones/11/scale = Vector3(1.0000002, 0.9999999, 0.99999994)
+bones/12/rotation = Quaternion(5.1184276e-11, 3.0773722e-10, -0.0266581, 0.99964464)
+bones/12/scale = Vector3(0.99999994, 0.99999994, 0.99999994)
+bones/13/rotation = Quaternion(1.1999163e-09, -9.210969e-08, 5.4551956e-06, 1)
+bones/13/scale = Vector3(1, 0.99999994, 0.99999994)
+bones/14/position = Vector3(-5.1389204e-10, 0.09612507, -0.057500124)
+bones/14/rotation = Quaternion(1.6805922e-09, -1.6805922e-09, 0.7071068, 0.7071067)
+bones/14/scale = Vector3(0.99999994, 1, 0.99999994)
+bones/15/position = Vector3(-0.17094506, 0.11358726, 1.3923272e-08)
+bones/15/rotation = Quaternion(0.9998491, 7.426552e-08, -3.1726273e-08, 0.017373191)
+bones/15/scale = Vector3(1, 0.9999998, 1.0000012)
+bones/16/rotation = Quaternion(0.106225125, -6.8652234e-08, 7.376965e-08, 0.9943421)
+bones/16/scale = Vector3(1, 1.0000005, 1.0000001)
+bones/17/rotation = Quaternion(-0.45523897, 1.659818e-07, 2.250792e-09, 0.8903693)
+bones/17/scale = Vector3(1, 1.0000008, 0.99999875)
+bones/18/rotation = Quaternion(2.1219783e-08, 0.92035496, -0.39108413, 6.450592e-08)
+bones/18/scale = Vector3(1, 0.9999966, 1.0000037)
+bones/19/position = Vector3(0.17094506, 0.11358726, 1.3923272e-08)
+bones/19/rotation = Quaternion(0.9998491, -7.132744e-08, -1.2042742e-08, 0.017373191)
+bones/19/scale = Vector3(1, 0.9999998, 1.0000012)
+bones/20/rotation = Quaternion(0.106225125, 6.865221e-08, -7.3769655e-08, 0.9943421)
+bones/20/scale = Vector3(1, 1.0000005, 1.0000001)
+bones/21/rotation = Quaternion(-0.45523897, 1.6197745e-08, -3.4356695e-08, 0.8903693)
+bones/21/scale = Vector3(1, 1.0000008, 0.99999875)
+bones/22/rotation = Quaternion(4.775987e-08, 0.92035496, -0.39108413, 5.801563e-08)
+bones/22/scale = Vector3(1, 0.9999966, 1.0000037)
+
+[node name="WeaponSlot" parent="AnimationAnchor/AnimatedEnemy/Enemy_Medium/Rig_Medium/Skeleton3D" index="6" unique_id=1708538452]
+transform = Transform3D(1.0561198e-05, -0.99999917, 4.5035844e-07, 4.0452986e-07, 3.9085265e-07, 0.9999996, -0.9999995, -1.06319785e-05, 3.51663e-07, -0.7131815, 1.1067611, 5.9604645e-08)
+
+[node name="LeftFootBone" parent="AnimationAnchor/AnimatedEnemy/Enemy_Medium/Rig_Medium/Skeleton3D" index="7" unique_id=2065344571]
+transform = Transform3D(1, 3.453806e-10, 1.4679381e-07, 1.02139325e-07, -0.7198734, -0.6941055, 1.054336e-07, 0.69410753, -0.7198728, -0.17094503, 0.14523712, -0.01858591)
+
+[node name="RightFootBone" parent="AnimationAnchor/AnimatedEnemy/Enemy_Medium/Rig_Medium/Skeleton3D" index="8" unique_id=1548542861]
+transform = Transform3D(1, -4.5086495e-08, 1.4679384e-07, 6.943411e-08, -0.7198734, -0.6941055, 1.3696801e-07, 0.69410753, -0.7198728, 0.17094503, 0.14523712, -0.01858591)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1891864345]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -35,3 +103,26 @@ health_color = Color(0.8901961, 0.2901961, 0.25882354, 1)
 [node name="HitAudio" type="AudioStreamPlayer3D" parent="." unique_id=1672568811]
 stream = ExtResource("3_am0pq")
 bus = &"SFX"
+
+[node name="StateMachine" type="Node" parent="." unique_id=659241977 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("6_m6jha")
+initial_state = NodePath("EnemyWait")
+
+[node name="EnemyWait" type="Node" parent="StateMachine" unique_id=362491490 node_paths=PackedStringArray("enemy")]
+script = ExtResource("7_glvfu")
+enemy = NodePath("../..")
+
+[node name="EnemyStun" type="Node" parent="StateMachine" unique_id=1363760622 node_paths=PackedStringArray("next_state", "enemy")]
+script = ExtResource("8_0rspp")
+next_state = NodePath("../EnemyWait")
+enemy = NodePath("../..")
+
+[node name="EnemyDefeat" type="Node" parent="StateMachine" unique_id=1814823921 node_paths=PackedStringArray("enemy")]
+script = ExtResource("9_efk13")
+enemy = NodePath("../..")
+
+[connection signal="defeat" from="HealthComponent" to="." method="_on_health_component_defeat"]
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+
+[editable path="AnimationAnchor/AnimatedEnemy"]
+[editable path="AnimationAnchor/AnimatedEnemy/Enemy_Medium"]

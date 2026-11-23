@@ -1,0 +1,22 @@
+extends EnemyState
+
+@export var next_state: EnemyState
+
+var timer: SceneTreeTimer
+
+func physics_update(_delta: float) -> void:
+	core_movement(enemy.base_speed, Vector3.ZERO)
+	enemy.move_and_slide()
+	
+func enter(_previous_state_path: String, _data := {}) -> void:
+	timer = get_tree().create_timer(2.0)
+	timer.timeout.connect(end_wait)
+	enemy.animation_tree.change_immediate("WalkSpace")
+	enemy.animation_tree.blend_target = -1.0
+
+func exit() -> void:
+	if timer.timeout.is_connected(end_wait):
+		timer.timeout.disconnect(end_wait)
+
+func end_wait() -> void:
+	finished.emit(next_state.name)

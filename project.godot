@@ -15,6 +15,10 @@ run/main_scene="uid://dyj3auoai18wd"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://cai13gaviuuvu"
 
+[audio]
+
+buses/default_bus_layout="uid://c2ywkcmpfnaml"
+
 [display]
 
 window/size/mode=3
@@ -27,6 +31,7 @@ project/assembly_name="GDTV-Roguelike"
 
 folder_colors={
 "res://Assets/": "red",
+"res://Enemy/": "purple",
 "res://Levels/": "orange",
 "res://Player/": "yellow",
 "res://Singletons/": "green",

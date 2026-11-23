@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://dyj3auoai18wd"]
 
 [ext_resource type="PackedScene" uid="uid://dveet4y3bg7gi" path="res://Player/player.tscn" id="2_ersrp"]
-[ext_resource type="Script" uid="uid://bdisjfqdmyaha" path="res://Components/HealthComponent.gd" id="4_ersrp"]
 [ext_resource type="Script" uid="uid://30na7or3infw" path="res://Levels/world_boundary.gd" id="5_kv2lc"]
-[ext_resource type="PackedScene" uid="uid://bwo2c4dl16ces" path="res://Components/health_bar.tscn" id="5_vjhoh"]
 [ext_resource type="VoxelGIData" uid="uid://dofj4wjwcunb2" path="res://Levels/GlobalIlluminationData/level_template_voxel_gi_data.tres" id="6_6ghb1"]
+[ext_resource type="PackedScene" uid="uid://bk4gxfbdgjgln" path="res://Enemy/enemy.tscn" id="6_vjhoh"]
 [ext_resource type="MeshLibrary" uid="uid://cbw5qq7imfwn5" path="res://Levels/Gridmap/floormap.tres" id="7_vjhoh"]
 [ext_resource type="MeshLibrary" uid="uid://10ib4mm1ty30" path="res://Levels/Gridmap/wall_map.tres" id="8_g8k58"]
 
@@ -32,10 +31,6 @@ vertices = PackedVector3Array(-7.5, 0.5, -7.5, -7.5, 0.5, 7, 7.5, 0.5, 7, 7.5, 0
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 sample_partition_type = 2
 geometry_parsed_geometry_type = 1
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_uk0tf"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uk0tf"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_uk0tf"]
 size = Vector2(8, 8)
@@ -84,28 +79,6 @@ metadata/_editor_floor_ = Vector3(0, -1, 0)
 [node name="Player" parent="." unique_id=602303743 instance=ExtResource("2_ersrp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=2073905181]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.472775, 0, 0)
-collision_layer = 3
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1563084653]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0566499, 3.9763608)
-gi_mode = 0
-mesh = SubResource("CapsuleMesh_uk0tf")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1244401784]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4)
-shape = SubResource("CapsuleShape3D_uk0tf")
-debug_color = Color(0.8039216, 0.09803922, 0.8235294, 0.6745098)
-
-[node name="HealthComponent" type="Node" parent="StaticBody3D" unique_id=1427365234]
-script = ExtResource("4_ersrp")
-
-[node name="HealthBar" parent="StaticBody3D" unique_id=609341116 node_paths=PackedStringArray("health_component") instance=ExtResource("5_vjhoh")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 3, 3.912)
-health_component = NodePath("../HealthComponent")
-health_color = Color(0.90061414, 0.38160056, 0.82914793, 1)
-
 [node name="Pit" type="MeshInstance3D" parent="." unique_id=1847991846]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -12)
 mesh = SubResource("PlaneMesh_uk0tf")
@@ -122,3 +95,6 @@ shape = SubResource("WorldBoundaryShape3D_uk0tf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
 size = Vector3(20, 16, 32)
 data = ExtResource("6_6ghb1")
+
+[node name="Enemy" parent="." unique_id=2015172738 instance=ExtResource("6_vjhoh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.689)

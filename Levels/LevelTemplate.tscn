@@ -97,4 +97,4 @@ size = Vector3(20, 16, 32)
 data = ExtResource("6_6ghb1")
 
 [node name="RangedEnemy" parent="." unique_id=2015172738 instance=ExtResource("6_vjhoh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.689)
+transform = Transform3D(-0.6926471, 0, 0.72127664, 0, 1, 0, -0.72127664, 0, -0.6926471, 0, 0, 4.689)

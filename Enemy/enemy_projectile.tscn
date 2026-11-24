@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://0qtans3shtxh"]
+
+[ext_resource type="Script" uid="uid://ypmwbglxwul0" path="res://Enemy/enemy_projectile.gd" id="1_6uikd"]
+[ext_resource type="AudioStream" uid="uid://d0fcu71wibih8" path="res://Assets/Audio/fire.ogg" id="1_qhog7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4m11m"]
+radius = 0.25
+
+[sub_resource type="SphereMesh" id="SphereMesh_uk0tf"]
+
+[node name="EnemyProjectile" type="ShapeCast3D" unique_id=990896993]
+top_level = true
+shape = SubResource("SphereShape3D_4m11m")
+target_position = Vector3(0, 0, 0)
+script = ExtResource("1_6uikd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2144889117]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("SphereMesh_uk0tf")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1229519387]
+stream = ExtResource("1_qhog7")
+autoplay = true
+bus = &"SFX"

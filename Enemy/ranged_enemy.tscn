@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://d0l671aaonnqf"]
 
 [ext_resource type="PackedScene" uid="uid://bk4gxfbdgjgln" path="res://Enemy/enemy.tscn" id="1_6jo5i"]
+[ext_resource type="Script" uid="uid://bwa1xb18xxwn3" path="res://Enemy/ranged_enemy.gd" id="2_4m11m"]
 [ext_resource type="Script" uid="uid://cpor1nuyd6gxf" path="res://StateMachine/EnemyStates/EnemyAttack.gd" id="2_cnthi"]
 
-[node name="RangedEnemy" unique_id=2015172738 instance=ExtResource("1_6jo5i")]
+[node name="RangedEnemy" unique_id=2015172738 node_paths=PackedStringArray("attack_bone") instance=ExtResource("1_6jo5i")]
+script = ExtResource("2_4m11m")
+attack_bone = NodePath("AnimationAnchor/AnimatedEnemy/Enemy_Medium/Rig_Medium/Skeleton3D/WeaponSlot")
 
 [node name="EnemyAttack" type="Node" parent="StateMachine" parent_id_path=PackedInt32Array(659241977) index="0" unique_id=931936813 node_paths=PackedStringArray("next_state", "enemy")]
 script = ExtResource("2_cnthi")
@@ -13,6 +16,8 @@ enemy = NodePath("../..")
 
 [node name="EnemyWait" parent="StateMachine" parent_id_path=PackedInt32Array(659241977) index="1" unique_id=362491490 node_paths=PackedStringArray("next_state")]
 next_state = NodePath("../EnemyAttack")
+
+[connection signal="ranged_attack" from="AnimationAnchor/AnimatedEnemy/Enemy_Medium/Rig_Medium/Skeleton3D/WeaponSlot" to="." method="_on_weapon_slot_ranged_attack"]
 
 [editable path="AnimationAnchor/AnimatedEnemy"]
 [editable path="AnimationAnchor/AnimatedEnemy/Enemy_Medium"]
